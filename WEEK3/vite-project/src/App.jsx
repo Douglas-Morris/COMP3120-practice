@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Footer from './components/Footer'
-import axios from 'axios'
 import Note from './components/Note'
 import noteService from './services/notes'
 import Notification from './components/Notification'
@@ -21,14 +20,13 @@ const App = () => {
   }, [])
 
   const toggleImportanceOf = (id) => {
-    const url = `http://localhost:3001/notes/${id}`
     const note = notes.find(n => n.id === id)
     const changedNote = {...note, important: !note.important}
 
     noteService
       .update(id, changedNote)
       .then(returnedNote => {
-        setNotes(notes.map(note => note.id === id ? returnedNote.data : note))
+        setNotes(notes.map(note => note.id === id ? returnedNote : note))
       })
       .catch(error => {
         setErrorMessage(
