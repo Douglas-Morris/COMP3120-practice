@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-
+require('dotenv').config()
+const Note = require('./models/note')
 
 const password = process.argv[2]
 
