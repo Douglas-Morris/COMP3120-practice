@@ -10,7 +10,7 @@ const url = `mongodb+srv://douglasmorris888_db_user:${password}@cluster0.t0tvqne
 
 mongoose.set('strictQuery',false)
 
-mongoose.connect(url, { family: 4 })
+//mongoose.connect(url, { family: 4 })
 
 const noteSchema = new mongoose.Schema({
   content: String,
@@ -24,8 +24,6 @@ noteSchema.set('toJSON', {
     delete returnedObject.__v
   }
 })
-
-const Note = mongoose.model('Note', noteSchema)
 
 
 app.use(express.static('dist'))
@@ -70,14 +68,9 @@ app.get('/api/notes', (request, response) => {
 })
 
 app.get('/api/notes/:id', (request, response) => {
-  const id = request.params.id
-  const note = notes.find((note) => note.id === id)
-
-  if (note) {
+  Note.findById(request.params.id).then(note => {
     response.json(note)
-  } else {
-    response.status(404).end()
-  }
+  })
 })
 
 const generatedId = () => {
@@ -96,15 +89,14 @@ app.post('/api/notes', (request, response) => {
         })
     }
     
-    const note = {
-        content: body.content,
-        important: body.important || false,
-        id: generatedId(),
-    }
+    const note = new Note({
+      content: body.content,
+      important: body.important || false,
+    })
 
-    notes = notes.concat(note)
-    
-    response.json(note)
+    note.save().then(savedNote => {
+      response.json(savedNote)
+    })
 })
 
 app.put('/api/notes/:id', (request, response) => {
