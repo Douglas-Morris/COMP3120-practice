@@ -2,6 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/Douglas-Morris/COMP3120-practice#readme",
+  "bugs": {
+    "url": "https://github.com/Douglas-Morris/COMP3120-practice/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Douglas-Morris/COMP3120-practice.git"
+  },
   "license": "ISC",
   "author": "Douglas Morris",
   "type": "commonjs",
